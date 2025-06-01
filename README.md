@@ -39,26 +39,26 @@ while optimizing resource utilization and cost efficiency.
 
 ## Usage
 
-Call this module in your Terraform repository:
+To utilize this module in your Terraform repository, you can call it as follows:
+
 
 ```hcl
 module "test" {
   source  = "infrahouse/sqs-pod/aws"
   version = "0.1.0"
   
-  service_name                 = "sqs-test"
-  consumer_subnet_ids          = var.consumer_subnet_ids
-  consumer_asg_min_size        = 1
-  consumer_asg_max_size        = 10
-  consumer_userdata            = data.cloudinit_config.config.rendered
+  service_name                 = "sqs-test"                               # A descriptive name for the service that owns the SQS queue.
+  consumer_subnet_ids          = var.consumer_subnet_ids                  # List of subnet IDs where the consumer EC2 instances will be created.
+  consumer_asg_min_size        = 1                                        # Minimum number of consumer EC2 instances in the ASG.                  
+  consumer_asg_max_size        = 10                                       # Maximum number of consumer EC2 instances in the ASG.              
+  consumer_userdata            = data.cloudinit_config.config.rendered    # Userdata script for cloud-init to configure the EC2 instances.
 }
 ```
 
 ### Consumer Instance Provisioning
 
-Once starts, the EC2 instance executes the cloud-init script.
-
-Example cloud-init script:
+Upon startup, the EC2 instance runs the cloud-init script.
+Below is an example of a cloud-init script:
 
 ```hcl
 data "cloudinit_config" "config" {
